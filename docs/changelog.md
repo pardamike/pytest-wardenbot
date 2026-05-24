@@ -11,6 +11,9 @@ The v0.1.0 line is the initial pre-release. See the
 [BUILD-PLAN](https://github.com/pardamike/pytest-wardenbot/blob/main/BUILD-PLAN.md)
 for the planned scope.
 
+The docs site you're reading is published on every push to `main` via
+[the docs workflow](https://github.com/pardamike/pytest-wardenbot/actions/workflows/docs.yml).
+
 ### Added (across the v0.1 development cycle)
 
 - **Core plugin and adapter framework** — `ChatbotAdapter` Protocol,
