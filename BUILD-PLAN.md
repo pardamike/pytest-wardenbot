@@ -14,7 +14,7 @@ The plan for shipping `pytest-wardenbot` v0.1.0 to PyPI. ~7 sessions, each rough
 
 **What this is NOT:**
 - Not the managed SaaS (that's Wave 6 of the main roadmap).
-- Not a sales tool with a "buy now" CTA (until the SaaS exists, the CTA is "join the waitlist").
+- Not a sales tool with a "buy now" CTA (until the SaaS exists, the CTA points to the [intake form](https://wardenbot.ai/intake/)).
 - Not RAMPART-based (see §RAMPART below).
 - Not a way to call our hosted API (Sentry-tier customers get that via a separate authenticated mode in v0.3+).
 
@@ -301,13 +301,13 @@ To keep v0.1 launchable, these wait:
 
 ---
 
-## Upgrade CTA strategy (waitlist for now)
+## Upgrade CTA strategy (intake form for now)
 
 Until the managed SaaS launches, the plugin's footer message on every test run:
 
 ```
 30 tests passed. ✅
-Want continuous monitoring across all your bots, daily? Join the waitlist → wardenbot.ai/waitlist
+Want continuous monitoring across all your bots, daily? Tell us about your setup → wardenbot.ai/intake/
 ```
 
 No "subscribe now" CTAs. No bait-and-switch. The plugin's value stands alone; the upgrade path is honest about the SaaS not being live yet.
@@ -329,4 +329,4 @@ When the SaaS launches in Wave 6, this footer changes to a real signup link.
 
 ## TL;DR
 
-7 sessions, ~2–3 weeks of focused founder time, to ship `pytest-wardenbot 0.1.0`. Defer RAMPART to v0.2 (alpha software + agentic-only relevance). Ship 15 deterministic tests + 5 optional LLM-judge tests. Lean install, frictionless first-test path, honest waitlist CTA. Start today with Session 1.
+7 sessions, ~2–3 weeks of focused founder time, to ship `pytest-wardenbot 0.1.0`. Defer RAMPART to v0.2 (alpha software + agentic-only relevance). Ship 30 deterministic tests + 5 optional LLM-judge case factories + opt-in canary-leak test. Lean install, frictionless first-test path, honest intake-form CTA. Start today with Session 1.
