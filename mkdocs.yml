@@ -82,12 +82,6 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
 
-# Launch posts are drafts kept in the repo for the maintainer to copy-edit
-# before posting elsewhere. They are intentionally not part of the published
-# docs site.
-not_in_nav: |
-  /launch/*
-
 nav:
   - Home: index.md
   - Quickstart: quickstart.md

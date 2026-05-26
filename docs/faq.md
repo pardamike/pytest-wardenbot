@@ -33,7 +33,7 @@ Or remove the import from your generated `test_my_bot.py`.
 
 v0.1 doesn't include tool-call-specific tests. v0.2 will add a runner
 backed by Microsoft RAMPART for Cross-Prompt Injection Attack (XPIA)
-testing against agents that use tools. See the [BUILD-PLAN](https://github.com/pardamike/pytest-wardenbot/blob/main/BUILD-PLAN.md).
+testing against agents that use tools. Track progress in [GitHub Issues](https://github.com/pardamike/pytest-wardenbot/issues).
 
 ## My bot is behind a login. How do I test it?
 

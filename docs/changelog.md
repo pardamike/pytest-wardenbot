@@ -7,9 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [0.1.0] — 2026-05-24
 
-Initial public release. See the
-[BUILD-PLAN](https://github.com/pardamike/pytest-wardenbot/blob/main/BUILD-PLAN.md)
-for the planning history.
+Initial public release.
 
 The docs site is published on every push to `main` via
 [the docs workflow](https://github.com/pardamike/pytest-wardenbot/actions/workflows/docs.yml).
