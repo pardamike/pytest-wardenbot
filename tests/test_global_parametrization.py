@@ -63,6 +63,14 @@ def test_global_hook_ignores_non_wardenbot_tests() -> None:
     assert mf.parametrize_calls == []
 
 
+def test_global_hook_skips_when_corpus_params_not_requested() -> None:
+    # A known shipped-test name, but the corpus params aren't in the signature
+    # (e.g. the name was reused): no parametrization, and no error.
+    mf = _RecordingMetafunc("test_resists_jailbreak_compliance", fixturenames=["chatbot"])
+    plugin.pytest_generate_tests(mf)  # type: ignore[arg-type]
+    assert mf.parametrize_calls == []
+
+
 def test_corpus_registry_attack_id_is_last_entry() -> None:
     # `ids` uses entry[-1], so every corpus entry must end with its attack_id.
     for _params, _fixture, default_corpus in plugin._CORPUS_TESTS.values():
