@@ -208,3 +208,65 @@ async def test_async_wraps_exceptions() -> None:
     adapter = AsyncLangChainAdapter(_BoomRunnable())
     with pytest.raises(WardenBotInfraError, match=r"runnable\.ainvoke failed"):
         await adapter.send_message("hi")
+
+
+# --------------------------------------------------------------------------- #
+# Extraction edge cases + lifecycle (coverage of the remaining branches)
+# --------------------------------------------------------------------------- #
+
+
+def test_content_blocks_mix_strings_and_dicts() -> None:
+    msg = types.SimpleNamespace(content=["plain ", {"type": "text", "text": "block"}])
+    assert LangChainAdapter(_StubRunnable(msg)).send_message("hi").text == "plain block"
+
+
+def test_content_list_without_text_falls_back_to_str() -> None:
+    msg = types.SimpleNamespace(content=[{"type": "image", "url": "x"}])
+    assert LangChainAdapter(_StubRunnable(msg)).send_message("hi").text == str(msg)
+
+
+def test_dict_skips_non_string_value_then_finds_later_key() -> None:
+    adapter = LangChainAdapter(_StubRunnable({"output": 123, "text": "the answer"}))
+    assert adapter.send_message("hi").text == "the answer"
+
+
+def test_dict_with_no_known_key_falls_back_to_str() -> None:
+    result = {"unexpected": "shape"}
+    assert LangChainAdapter(_StubRunnable(result)).send_message("hi").text == str(result)
+
+
+def test_raw_uses_model_dump_when_available() -> None:
+    class _Dumpable:
+        content = "hi there"
+
+        def model_dump(self) -> dict[str, Any]:
+            return {"content": "hi there", "meta": 1}
+
+    resp = LangChainAdapter(_StubRunnable(_Dumpable())).send_message("hi")
+    assert resp.text == "hi there"
+    assert resp.raw == {"content": "hi there", "meta": 1}
+
+
+def test_raw_falls_back_when_model_dump_raises() -> None:
+    class _BadDump:
+        content = "still got text"
+
+        def model_dump(self) -> dict[str, Any]:
+            raise ValueError("cannot dump")
+
+    resp = LangChainAdapter(_StubRunnable(_BadDump())).send_message("hi")
+    assert resp.text == "still got text"
+    assert resp.raw is not None and "repr" in resp.raw
+
+
+def test_reset_session_and_repr() -> None:
+    adapter = LangChainAdapter(_StubRunnable())
+    adapter.reset_session("s1")  # no-op, must not raise
+    assert repr(adapter) == "LangChainAdapter(runnable=_StubRunnable)"
+
+
+@pytest.mark.asyncio
+async def test_async_reset_session_and_repr() -> None:
+    adapter = AsyncLangChainAdapter(_AsyncStubRunnable())
+    await adapter.reset_session("s1")  # no-op, must not raise
+    assert repr(adapter) == "AsyncLangChainAdapter(runnable=_AsyncStubRunnable)"
