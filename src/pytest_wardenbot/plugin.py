@@ -58,10 +58,10 @@ chatbot by adding a fixture to your conftest.py. Minimal example:
             url="https://your-chatbot.example.com/chat",
             headers={"Authorization": f"Bearer {os.environ['CHATBOT_TOKEN']}"},
             request_field="message",
-            response_field="reply",
+            response_field="response",
         )
 
-See https://github.com/pardamike/pytest-wardenbot#quickstart for more.
+See https://pytest-wardenbot.wardenbot.ai/quickstart/ for more.
 """
 
 _NO_TRUTH_FACTS_MESSAGE = """\
