@@ -67,6 +67,13 @@ def test_assistants_adapter_sends_and_extracts_text() -> None:
     assert run_call["assistant_id"] == "asst_test"
 
 
+def test_assistants_adapter_empty_reply_returns_empty_text() -> None:
+    # An empty assistant reply is valid output, not an infra error.
+    adapter = _sync(StubOpenAIAssistantsClient(response_text=""))
+    result = adapter.send_message("hi")
+    assert result.text == ""
+
+
 def test_assistants_adapter_polls_until_complete() -> None:
     client = StubOpenAIAssistantsClient(
         response_text="done", run_statuses=("in_progress", "completed")

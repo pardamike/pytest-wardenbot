@@ -68,9 +68,9 @@ def _extract_text(message: Any) -> str:
             f"OpenAI Assistants response shape unexpected: {message!r}"
         ) from exc
     for block in blocks:
-        value = getattr(getattr(block, "text", None), "value", None)
-        if value:
-            return value
+        text_obj = getattr(block, "text", None)
+        if text_obj is not None:
+            return getattr(text_obj, "value", "") or ""
     raise WardenBotInfraError(
         f"OpenAI Assistants message had no text content block. Got: {message!r}"
     )
@@ -205,7 +205,13 @@ class OpenAIAssistantsAdapter:
             raise WardenBotInfraError(
                 f"OpenAI Assistants thread {thread_id!r} had no messages after the run completed."
             )
-        return data[0]
+        message = data[0]
+        if getattr(message, "role", "assistant") != "assistant":
+            raise WardenBotInfraError(
+                f"OpenAI Assistants thread {thread_id!r}: latest message role is "
+                f"{getattr(message, 'role', None)!r}, not an assistant reply."
+            )
+        return message
 
     def _delete_thread(self, thread_id: str) -> None:
         with contextlib.suppress(Exception):
@@ -306,7 +312,13 @@ class AsyncOpenAIAssistantsAdapter:
             raise WardenBotInfraError(
                 f"OpenAI Assistants thread {thread_id!r} had no messages after the run completed."
             )
-        return data[0]
+        message = data[0]
+        if getattr(message, "role", "assistant") != "assistant":
+            raise WardenBotInfraError(
+                f"OpenAI Assistants thread {thread_id!r}: latest message role is "
+                f"{getattr(message, 'role', None)!r}, not an assistant reply."
+            )
+        return message
 
     async def _delete_thread(self, thread_id: str) -> None:
         with contextlib.suppress(Exception):
