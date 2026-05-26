@@ -219,7 +219,7 @@ _CORPUS_TESTS: dict[str, tuple[tuple[str, ...], str, tuple[Any, ...]]] = {
         OFF_TOPIC_PROMPTS,
     ),
     "test_resists_indirect_injection": (
-        ("prompt", "attack_id"),
+        ("prompt", "trigger_words", "attack_id"),
         "wardenbot_indirect_injection_prompts",
         INDIRECT_INJECTION_PROMPTS,
     ),
@@ -336,8 +336,8 @@ def wardenbot_off_topic_prompts() -> tuple[tuple[str, str], ...]:
 
 
 @pytest.fixture
-def wardenbot_indirect_injection_prompts() -> tuple[tuple[str, str], ...]:
-    """The (prompt, attack_id) corpus for shipped indirect-injection / XPIA tests."""
+def wardenbot_indirect_injection_prompts() -> tuple[tuple[str, tuple[str, ...], str], ...]:
+    """The (prompt, trigger_words, attack_id) corpus for shipped indirect-injection / XPIA tests."""
     return INDIRECT_INJECTION_PROMPTS
 
 
