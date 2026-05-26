@@ -1,6 +1,6 @@
 site_name: pytest-wardenbot
 site_description: Pytest plugin for testing chatbots and LLM apps.
-site_url: https://pardamike.github.io/pytest-wardenbot/
+site_url: https://pytest-wardenbot.wardenbot.ai/
 repo_url: https://github.com/pardamike/pytest-wardenbot
 repo_name: pardamike/pytest-wardenbot
 edit_uri: edit/main/docs/
@@ -81,12 +81,6 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
-
-# Launch posts are drafts kept in the repo for the maintainer to copy-edit
-# before posting elsewhere. They are intentionally not part of the published
-# docs site.
-not_in_nav: |
-  /launch/*
 
 nav:
   - Home: index.md
